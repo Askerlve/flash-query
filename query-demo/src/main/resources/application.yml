@@ -1,0 +1,12 @@
+server:
+  port: 8001
+
+spring:
+  thymeleaf:
+    check-template: false
+    check-template-location: false
+  application:
+    name: query-demo
+  profiles:
+    active: dev
+
