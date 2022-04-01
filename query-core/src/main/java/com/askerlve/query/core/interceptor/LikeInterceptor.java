@@ -107,8 +107,13 @@ public class LikeInterceptor implements Interceptor {
                 Object a = parameter.get(keyList[2]);
                 if (a instanceof String && (a.toString().contains("_") || a.toString().contains("\\") || a.toString()
                         .contains("%"))) {
+                    //SqlLike DEFAULT
+                    if (a.toString().startsWith("%") && a.toString().endsWith("%")) {
+                        parameter.put(keyList[2],
+                                "%" + ESCAPER.escape(a.toString().substring(1, a.toString().length() - 1)) + "%");
+                    }
                     //SqlLike LEFT
-                    if (a.toString().startsWith("%")) {
+                    else if (a.toString().startsWith("%")) {
                         parameter.put(keyList[2], "%" + ESCAPER.escape(a.toString().substring(1)));
                     }
                     //SqlLike RIGHT
@@ -116,30 +121,25 @@ public class LikeInterceptor implements Interceptor {
                         parameter.put(keyList[2],
                                 ESCAPER.escape(a.toString().substring(0, a.toString().length() - 1)) + "%");
                     }
-                    //SqlLike DEFAULT
-                    else {
-                        parameter.put(keyList[2],
-                                "%" + ESCAPER.escape(a.toString().substring(1, a.toString().length() - 1)) + "%");
-                    }
                 }
             } else if (!keyName.contains("ew.paramNameValuePairs.") && sql.toLowerCase().contains(" like ?")) {
                 // 第二种情况：未使用条件构造器，但是在service层进行了查询关键字与模糊查询符`%`手动拼接
                 Object a = parameter.get(keyName);
                 if (a instanceof String && (a.toString().contains("_") || a.toString().contains("\\") || a.toString()
                         .contains("%"))) {
+                    //SqlLike DEFAULT
+                    if (a.toString().startsWith("%") && a.toString().endsWith("%")) {
+                        parameter.put(keyName,
+                                "%" + ESCAPER.escape(a.toString().substring(1, a.toString().length() - 1)) + "%");
+                    }
                     //SqlLike LEFT
-                    if (a.toString().startsWith("%")) {
+                    else if (a.toString().startsWith("%")) {
                         parameter.put(keyName, "%" + ESCAPER.escape(a.toString().substring(1)));
                     }
                     //SqlLike RIGHT
                     else if (a.toString().endsWith("%")) {
                         parameter.put(keyName,
                                 ESCAPER.escape(a.toString().substring(0, a.toString().length() - 1)) + "%");
-                    }
-                    //SqlLike DEFAULT
-                    else {
-                        parameter.put(keyName,
-                                "%" + ESCAPER.escape(a.toString().substring(1, a.toString().length() - 1)) + "%");
                     }
                 }
             } else {
