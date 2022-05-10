@@ -19,7 +19,7 @@ public class TestListDTO extends PageQuery {
     @EQ(field = "id")
     private Long id;
 
-    @LIKE(field = "name", type = SqlLike.LEFT)
+    @LIKE(field = "name", type = SqlLike.DEFAULT)
     private String name;
 
     @GT(field = "age")

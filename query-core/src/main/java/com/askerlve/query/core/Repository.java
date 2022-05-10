@@ -4,10 +4,9 @@ import com.askerlve.query.core.entity.Aggregate;
 import com.askerlve.query.core.query.Page;
 import com.askerlve.query.core.query.PageQuery;
 import com.askerlve.query.core.query.Query;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,8 +15,7 @@ import java.util.List;
  * @author asker_lve
  * @date 2021/4/21 17:36
  */
-public interface Repository<T extends Aggregate<ID>, ID extends Serializable> {
-    T find(@NotNull ID id);
+public interface Repository<T extends Aggregate<ID>, ID extends Serializable> extends IService<T> {
 
     boolean updateByCondition(T aggregate, Query query);
 
@@ -28,20 +26,6 @@ public interface Repository<T extends Aggregate<ID>, ID extends Serializable> {
     T find(Query query);
 
     int count(Query query);
-
-    void remove(@NotNull T aggregate);
-
-    void removeById(@NotNull ID id);
-
-    void removeBatch(@NotNull Collection<T> aggregates);
-
-    void save(@NotNull T aggregate);
-
-    void saveBatch(@NotNull Collection<T> aggregates);
-
-    void update(T aggregate);
-
-    void updateBatch(@NotNull Collection<T> aggregates);
 
     int delete(Query query);
 }
