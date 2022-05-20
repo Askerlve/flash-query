@@ -27,7 +27,7 @@ public class BaseRepository<T extends Aggregate<ID>, ID extends Serializable, S 
     private PageConvertor pageConvertor;
 
     @Override
-    public boolean updateByCondition(T aggregate, Query query) {
+    public boolean update(T aggregate, Query query) {
         QueryWrapper<T> wrapper = QueryUtil.buildQueryWrapper(query, this.getEntityClass());
         return this.update(aggregate, wrapper);
     }

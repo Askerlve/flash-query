@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface Repository<T extends Aggregate<ID>, ID extends Serializable> extends IService<T> {
 
-    boolean updateByCondition(T aggregate, Query query);
+    boolean update(T aggregate, Query query);
 
     Page<T> page(PageQuery pageQuery);
 
